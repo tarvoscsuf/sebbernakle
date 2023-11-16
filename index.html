@@ -54,7 +54,7 @@
 </head>
 <body>
     <div class="container">
-      <form id="contactForm" action="send_email.php" method="post">
+        <form id="contactForm" action="send_email.php" method="post">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -70,13 +70,8 @@
 
     <script>
         function submitForm() {
-            var name = document.getElementById("name").value;
-            var topic = document.getElementById("topic").value;
-            var message = document.getElementById("message").value;
-
-            console.log("Name: " + name);
-            console.log("Topic: " + topic);
-            console.log("Message: " + message);
+            var form = document.getElementById("contactForm");
+            form.submit();
         }
     </script>
 </body>
