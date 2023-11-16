@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+
+  <title>PikaGPT</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .chat-box {
+      width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .messages {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      overflow: auto;
+    }
+
+    .user-message, .bot-message {
+      border-radius: 5px;
+      padding: 10px;
+      max-width: 70%;
+    }
+
+    .user-message {
+      background-color: #007aff;
+      color: #fff;
+      float: right;
+      clear: both;
+    }
+
+    .bot-message {
+      background-color: #28a745;
+      color: #fff;
+      float: left;
+      clear: both;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin: 0;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .send-button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 2px;
+      padding: 0px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      float: right;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .loading-message {
+      color: #888;
+      text-align: center;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif; /* Set the font to Raleway */
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-box">
+    <h1>Pikachu ChatGPT</h1>
+
+    <ul class="messages" id="messages">
+      <li class="message bot-message">Pika pika!</li>
+    </ul>
+
+    <div style="clear: both;"></div>
+
+    <input type="text" id="prompt" placeholder="Enter a prompt...">
+    <button id="generate" class="send-button" disabled>Generate</button>
+
+    <div class="loading-message" id="loading-message" style="display:none;">Pikachu is typing...</div>
+  </div>
+
+  <script>
+    const generateResponse = () => {
+      const prompt = document.getElementById('prompt').value;
+      const messages = document.getElementById("messages");
+      const userMessage = '<li class="message user-message">' + prompt + '</li>';
+      messages.innerHTML += userMessage;
+
+      const loadingMessage = document.getElementById('loading-message');
+      loadingMessage.style.display = 'block';
+
+      const randomTypingTime = Math.random() * 2000; // Random time between 0 to 2 seconds
+      setTimeout(() => {
+        // Define the options
+        const options = ["pika", "pikipi", "piika", "pikapi"];
+
+        // Generate a random response length (between 1 and 10 words)
+        const responseLength = Math.floor(Math.random() * 10) + 1;
+
+        // Generate the response
+        let response = '';
+        for (let i = 0; i < responseLength; i++) {
+          const randomWord = options[Math.floor(Math.random() * options.length)];
+          response += randomWord + ' ';
+        }
+
+        // Generate a random punctuation mark
+        const punctuation = ['?', '!', '.'][Math.floor(Math.random() * 3)];
+
+        // Display the response
+        const botMessage = '<li class="message bot-message">' + response.trim() + punctuation + '</li>';
+        messages.innerHTML += botMessage;
+
+        // Clear input field
+        document.getElementById('prompt').value = '';
+
+        loadingMessage.style.display = 'none';
+      }, randomTypingTime);
+    };
+
+    const promptInput = document.getElementById('prompt');
+    promptInput.addEventListener('input', () => {
+      const generateButton = document.getElementById('generate');
+      generateButton.disabled = promptInput.value === '';
+    });
+
+    document.getElementById('generate').addEventListener('click', generateResponse);
+  </script>
+
+</body>
+</html>
